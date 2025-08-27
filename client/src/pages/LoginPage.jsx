@@ -16,12 +16,12 @@ const LoginPage = () => {
   const onSubmitHandler = (event)=>{
     event.preventDefault();
 
-    if(currState === 'Sign up' && !isDataSubmitted){
+    if(currState === 'sign up' && !isDataSubmitted){
       setIsDataSubmitted(true)
       return;
     }
 
-    login(currState=== "Sign up" ? 'signup' : 'login', {fullName, email, password, bio})
+    login(currState=== "sign up" ? 'signup' : 'login', {fullName, email, password, bio})
 
 
   }
@@ -41,7 +41,7 @@ const LoginPage = () => {
 
           
         </h2>
-        {currState === "Sign up" && !isDataSubmitted && (
+        {currState === "sign up" && !isDataSubmitted && (
           <input onChange={(e)=>setFullName(e.target.value)} value={fullName} type="text" className='p-2 border border-gray-500 rounded-md focus:outline-none' placeholder="Full Name" required/>
         )}
 
@@ -53,7 +53,7 @@ const LoginPage = () => {
         )}
 
         
-         {currState === "Sign up" && isDataSubmitted && (
+         {currState === "sign up" && isDataSubmitted && (
             <textarea onChange={(e)=>setBio(e.target.value)} value={bio} rows={4} className='p-2 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500' placeholder='provide a short bio...' required></textarea>
           )
         }
@@ -68,7 +68,7 @@ const LoginPage = () => {
         </div>
 
         <div className='flex flex-col gap-2'>
-          {currState === "Sign up" ? (
+          {currState === "sign up" ? (
             <p className='text-sm text-green-600'>Already have an account? <span onClick={()=>{setCurrState("Login"); setIsDataSubmitted(false)}} className='font-medium text-violet-500 cursor-pointer'>Login here</span></p>
           ) : (
             <p className='text-sm text-gray-600'>Create an account <span onClick={()=> setCurrState("Sign up")} className='font-medium text-violet-500 cursor-pointer'>Click here</span></p>
