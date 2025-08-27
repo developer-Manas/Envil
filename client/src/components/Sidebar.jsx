@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import assets  from '../assets/assets'
-import { useNavigate } from 'react-router-dom'
-import { AuthContext } from '../../context/AuthContext'
-import { ChatContext } from '../../context/ChatContext'
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
+import { ChatContext } from '../../context/ChatContext';
 
 const Sidebar = ({selectedUser, setSelectedUser}) => {
 
-  const {getUsers, users, contextselectedUser, contextsetSelectedUser, unseenMessages, setUnseenMessages } = useContext(ChatContext)
+  const {getUsers, users, contextselectedUser, contextsetSelectedUser, unseenMessages, setUnseenMessages } = useContext(ChatContext);
 
   const {logout, onlineUsers} = useContext(AuthContext)
 
@@ -14,7 +14,7 @@ const Sidebar = ({selectedUser, setSelectedUser}) => {
 
   const navigate = useNavigate();
 
-  const filteredUsers = input ? users.filter((user)=>user.fullName.toLowerCase().include(input.toLowerCase())) : users;
+  const filteredUsers = input ? users.filter((user)=>user.fullName.toLowerCase().includes(input.toLowerCase())) : users;
 
   useEffect(()=>{
     getUsers();
