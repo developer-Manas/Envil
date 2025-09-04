@@ -6,9 +6,8 @@ import { connectDB } from "./lib/db.js";
 import userRouter from "./routes/userRoutes.js";
 import messageRouter from "./routes/messageRoutes.js";
 import { Server } from "socket.io";
-import { Socket } from "dgram";
 
-// create Express app and HTTP server
+// Create Express app and HTTP server
 const app = express();
 const server = http.createServer(app)
 
@@ -22,39 +21,39 @@ export const userSocketMap = {}; // { userId: socketId }
 
 // Socket.io connection handler
 io.on("connection", (socket)=>{
-    const userId = Socket.handsake.query.userId;
+    const userId = socket.handshake.query.userId;
     console.log("User Connected", userId);
 
-    if(userId) userSocketMap[userId] = Socket.id;
-
-    //  Emit online users to all connected clients
+    if(userId) userSocketMap[userId] = socket.id;
+    
+    // Emit online users to all connected clients
     io.emit("getOnlineUsers", Object.keys(userSocketMap));
 
-    Socket.on("disconnect", ()=>{
+    socket.on("disconnect", ()=>{
         console.log("User Disconnected", userId);
         delete userSocketMap[userId];
         io.emit("getOnlineUsers", Object.keys(userSocketMap))
     })
 })
 
-
 // Middleware setup
 app.use(express.json({limit: "4mb"}));
 app.use(cors());
 
-// Route setup
+
+// Routes setup
 app.use("/api/status", (req, res)=> res.send("Server is live"));
 app.use("/api/auth", userRouter);
-app.use("/api/messages", messageRouter);
+app.use("/api/messages", messageRouter)
+
 
 // Connect to MongoDB
 await connectDB();
 
 if(process.env.NODE_ENV !== "production"){
     const PORT = process.env.PORT || 5000;
-    server.listen(PORT, ()=> console.log("Server is running on PORT:" + PORT));
+    server.listen(PORT, ()=> console.log("Server is running on PORT: " + PORT));
 }
-// Export server for versel
 
+// Export server for Vervel
 export default server;
-
