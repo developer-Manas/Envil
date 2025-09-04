@@ -21,7 +21,7 @@ const LoginPage = () => {
       return;
     }
 
-    login(currState, {fullName, email, password, bio})
+    login(currState=== "sign up" ? 'signup' : 'login', {fullName, email, password, bio})
 
 
   }
